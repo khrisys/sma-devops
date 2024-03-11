@@ -1,1 +1,36 @@
-<p>vehicule works!</p>
+<div class="p-3">
+  <div class="card">
+    <div class="card-body">
+      <table class="table" *ngIf="vehicules">
+        <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Immatriculation</th>
+          <th scope="col">Date de 1ere mise en circulation</th>
+          <th scope="col">Type du véhicule</th>
+          <th scope="col">Marque du véhicule</th>
+          <th scope="col">Climation</th>
+<!--          <th scope="col">Rue</th>-->
+<!--          <th scope="col">CP</th>-->
+<!--          <th scope="col">Ville</th>-->
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let v of vehicules; index as i">
+          <td>{{v.id}}</td>
+          <td>{{v.immatriculationVehicule}}</td>
+          <td>{{v.dateMiseEnCirculationVehicule}}</td>
+          <td>{{v.typeVehicule}}</td>
+          <td>{{v.marqueVehicule}}</td>
+          <td>{{v.climatisationVehicule}}</td>
+<!--          <td>{{v.adresseClient.rue}}</td>-->
+<!--          <td>{{v.adresseClient.cp}}</td>-->
+<!--          <td>{{v.adresseClient.ville}}</td>-->
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
