@@ -5,6 +5,8 @@ target/
 !**/src/test/**/target/
 ### dossier de fichiers de configuration pourssé sur github
 /configuration-repo/
+/configuration_repo/
+/configurationrepo/
 
 ### STS ###
 .apt_generated
@@ -63,3 +65,4 @@ replay_pid*
 target/
 pom.xml.tag
 pom.xml.releaseBackup
+
