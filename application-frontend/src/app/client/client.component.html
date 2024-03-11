@@ -1,1 +1,37 @@
-<p>client works!</p>
+<div class="p-3">
+  <div class="card">
+    <div class="card-body">
+      <table class="table" *ngIf="clients">
+        <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nom</th>
+          <th scope="col">Prenom</th>
+          <th scope="col">Mail</th>
+          <th scope="col">Téléphone</th>
+          <th scope="col">Numero </th>
+          <th scope="col">Rue</th>
+          <th scope="col">CP</th>
+          <th scope="col">Ville</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let c of clients; index as i">
+          <td>{{c.id}}</td>
+          <td>{{c.nomClient}}</td>
+          <td>{{c.prenomClient}}</td>
+          <td>{{c.mailClient}}</td>
+          <td>{{c.telClient}}</td>
+          <td>{{c.adresseClient.numeroDeRue}}</td>
+          <td>{{c.adresseClient.rue}}</td>
+          <td>{{c.adresseClient.cp}}</td>
+          <td>{{c.adresseClient.ville}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
