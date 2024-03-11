@@ -99,3 +99,10 @@ services:
     depends_on:
       sma-configuration-service:
         condition: service_healthy
+  application-frontend:
+    build: application-frontend
+    container_name: application-frontend
+    ports:
+      - '80:80'
+    expose:
+      - '80'
