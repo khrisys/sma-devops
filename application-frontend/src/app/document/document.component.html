@@ -1,1 +1,36 @@
-<p>document works!</p>
+<div class="p-3">
+  <div class="card">
+    <div class="card-body">
+      <table class="table" *ngIf="documents">
+        <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nom du doc</th>
+          <th scope="col">Titre du doc</th>
+          <th scope="col">Type</th>
+          <th scope="col">Personne qui a créé le doc</th>
+          <th scope="col">Date de création</th>
+          <th scope="col">Date de modification</th>
+          <th scope="col">Id du véhicule</th>
+          <!--          <th scope="col">Ville</th>-->
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let d of documents; index as i">
+          <td>{{d.id}}</td>
+          <td>{{d.nomDocument}}</td>
+          <td>{{d.titreDocument}}</td>
+          <td>{{d.typeDocument}}</td>
+          <td>{{d.emetteurDuDocument}}</td>
+          <td>{{d.dateCreationDocument}}</td>
+          <td>{{d.dateModificationDocument}}</td>
+          <td>{{d.vehiculeId}}</td>
+          <!--          <td>{{v.adresseClient.ville}}</td>-->
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
