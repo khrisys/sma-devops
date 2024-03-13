@@ -10,7 +10,7 @@ import java.util.List;
 
 @Controller
 public class GarageController {
-    private GarageRepository garageRepository;
+    private final GarageRepository garageRepository;
 
     public GarageController(GarageRepository garageRepository) {
         this.garageRepository = garageRepository;
