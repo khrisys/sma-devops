@@ -31,17 +31,13 @@
         <li class="nav-item">
           <a class="nav-link" th:href="@{/documents}">Documents</a>
         </li>
-
-<!--        <li class="nav-item">-->
-<!--          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
-<!--        </li>-->
       </ul>
 
 <!--      AUTHENTIFICATION-->
       <ul class="navbar">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <span th:text="${#authentication.name}"></span>
+            <span th:text="${#authentication.getName()}"></span>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" th:href="@{/login}">Login</a></li>
@@ -50,8 +46,8 @@
                 <button class="btn btn-success">Logout</button>
               </form>
             </li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Profil</a></li>
+<!--            <li><hr class="dropdown-divider"></li>-->
+<!--            <li><a class="dropdown-item" href="#">Profil</a></li>-->
           </ul>
         </li>
       </ul>
