@@ -22,6 +22,7 @@ import java.util.*;
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
+    // objet qui enregistre les differents providers
     private ClientRegistrationRepository clientRegistrationRepository;
 
     public SecurityConfig(ClientRegistrationRepository clientRegistrationRepository) {
@@ -30,7 +31,7 @@ public class SecurityConfig {
 
     /**
      * Specifie les autorisations de connection. Prend en charge les attaques CSRF.
-     *
+     * <p>
      * Sur le logout, je supprime le cookie JSESSIONID
      *
      * @param http
@@ -45,20 +46,28 @@ public class SecurityConfig {
                 .authorizeHttpRequests(ar -> ar.anyRequest().authenticated())
                 .headers(h -> h.frameOptions(fo -> fo.disable()))
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
-                .oauth2Login(Customizer.withDefaults())
-//                .oauth2Login(al ->
-//                        al.loginPage("/oauth2Login")
-//                                .defaultSuccessUrl("/")
-//                )
+                //personnalisation de la page d'authentification
+                //.oauth2Login(Customizer.withDefaults())
+                .oauth2Login(al ->
+                        al.loginPage("/oauth2Login")
+                                .defaultSuccessUrl("/")
+                )
                 .logout((logout) -> logout
                         .logoutSuccessHandler(oidcLogoutSuccessHandler())
                         .logoutSuccessUrl("/").permitAll()
                         .clearAuthentication(true)
                         .deleteCookies("JSESSIONID"))
+                //renvoi vers la page notAuthorized lorsque user n'as pas de droit.
                 .exceptionHandling(eh -> eh.accessDeniedPage("/notAutorized"))
                 .build();
     }
 
+    /**
+     * Prise en charge de la deconnection, cad qu''on dit au provider connecté de se deconnecter et que l'appli doit
+     * faire une redicretion vers l'url par defaut
+     *
+     * @return objet qui prend en charge la deconnection
+     */
     private OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler() {
         final OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler =
                 new OidcClientInitiatedLogoutSuccessHandler(this.clientRegistrationRepository);
@@ -66,6 +75,12 @@ public class SecurityConfig {
         return oidcLogoutSuccessHandler;
     }
 
+    /**
+     * Mapper qui permet de mapper les roles recus dans un jwt et les recuperer dans l'appli. On est obligé de faire
+     * ca car le format des jwt n'est jamais le meme en fonction des providers.
+     *
+     * @return liste de roles d'un user
+     */
     @Bean
     public GrantedAuthoritiesMapper userAuthoritiesMapper() {
         return (authorities) -> {
@@ -82,8 +97,9 @@ public class SecurityConfig {
         };
     }
 
+
     /**
-     * Liste des autorisations
+     * Fournit la liste des providers qui permettent de se connecter à l'application frontend.
      *
      * @param attributes
      * @return

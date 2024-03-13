@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
@@ -29,13 +30,17 @@ public class ThymeleafController {
         this.clientRegistrationRepository = clientRegistrationRepository;
     }
 
-//    @GetMapping("/garage/{id}")
-//    public String garageById(@PathVariable Long id){
-//        return garageRepository.findById(id).get();
-//    }
+    @GetMapping("/garage/{id}")
+    @PreAuthorize("hasAuthority('USER')")
+    public String garageById(@PathVariable Long id, Model model) {
+        Garage garage = garageRepository.findById(id).get();
+        model.addAttribute("garage", garage);
+        model.addAttribute("id", garage.getId());
+        return "garage"; //FIXME
+    }
 
     @GetMapping("/garages")
-    //@PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('USER')")
     public String garages(Model model) {
         List<Garage> garages = garageRepository.findAll();
         model.addAttribute("garages", garages);
@@ -43,7 +48,7 @@ public class ThymeleafController {
     }
 
     @GetMapping("/clients")
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String clients(Model model) {
         List<Client> clients = clientRepository.findAll();
         model.addAttribute("clients", clients);
@@ -82,6 +87,13 @@ public class ThymeleafController {
         return "notAuthorized";
     }
 
+    /**
+     * Personnalisation de la page d'authentification en affichant la liste des providers, mais avec la possibilité
+     * d'ajouter du css ou autre, dont images, etc.
+     *
+     * @param model
+     * @return
+     */
     @GetMapping("/oauth2Login")
     public String oauth2Login(Model model) {
         String authorizationRequestBaseUri = "oauth2/authorization";
