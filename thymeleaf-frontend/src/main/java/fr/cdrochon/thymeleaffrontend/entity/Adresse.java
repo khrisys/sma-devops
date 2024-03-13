@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class AdresseGarage {
+public class Adresse {
 
     private String numeroDeRue;
     private String rue;
