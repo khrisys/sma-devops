@@ -4,15 +4,22 @@ import fr.cdrochon.thymeleaffrontend.entity.Client;
 import fr.cdrochon.thymeleaffrontend.entity.Garage;
 import fr.cdrochon.thymeleaffrontend.repository.ClientRepository;
 import fr.cdrochon.thymeleaffrontend.repository.GarageRepository;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestClient;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,10 +46,21 @@ public class ThymeleafController {
         return "garage"; //FIXME
     }
 
+    /**
+     * Requete vers le ms garage avec RestClient
+     *
+     * @param model
+     * @return
+     */
     @GetMapping("/garages")
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String garages(Model model) {
-        List<Garage> garages = garageRepository.findAll();
+        //FIXME Performance RestClient et jwtTokenValue!!!!
+        RestClient restClient = RestClient.create("http://localhost:8081");
+        List<Garage> garages =
+                restClient.get().uri("/garages").headers(httpHeaders -> httpHeaders.set(HttpHeaders.AUTHORIZATION,
+                        "Bearer " + getJwtTokenValue())).retrieve().body(new ParameterizedTypeReference<List<Garage>>() {
+                });
         model.addAttribute("garages", garages);
         return "garages";
     }
@@ -106,5 +124,24 @@ public class ThymeleafController {
         });
         model.addAttribute("urls", oauth2AuthenticationUrls);
         return "oauth2Login";
+    }
+
+    /**
+     * Recupere le token jwt de l'user qui s'est authentifié
+     * <p>
+     * L'objet OAuth2AuthenticationToken suppose qu'on a fait l'authentification avec un provider qui
+     * supporte OpenID (keycloak ou google)
+     * <p>
+     * on doit importer la dependance oauth2-client pour la methode OAuth2AuhtenticationToken
+     *
+     * @return
+     */
+    private String getJwtTokenValue() {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        OAuth2AuthenticationToken oAuth2AuthenticationToken = (OAuth2AuthenticationToken) authentication;
+        DefaultOidcUser oidcUser = (DefaultOidcUser) oAuth2AuthenticationToken.getPrincipal();
+        String jwtTokenValue = oidcUser.getIdToken().getTokenValue();
+        return jwtTokenValue;
     }
 }
