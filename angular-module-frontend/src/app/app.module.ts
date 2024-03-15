@@ -10,6 +10,10 @@ import { DocumentComponent } from './document/document.component';
 import {HttpClientModule} from "@angular/common/http";
 import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
 
+/**
+ * service de keycloak qui fonctionne à travers les modules et qui s'execute au demarrage de l'appli
+ * @param keycloak
+ */
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
