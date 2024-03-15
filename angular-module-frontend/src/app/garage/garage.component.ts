@@ -16,7 +16,7 @@ export class GarageComponent implements OnInit {
    * Recupere les données  à l'initialisation du component
    */
   ngOnInit() {
-    this.http.get("http://localhost:8081").subscribe({
+    this.http.get("http://localhost:8081/garages").subscribe({
       next: value => {
         this.garages = value;
       },
