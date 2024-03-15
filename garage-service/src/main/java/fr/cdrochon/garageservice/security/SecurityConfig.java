@@ -36,19 +36,24 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(Customizer.withDefaults())
+                .cors(Customizer.withDefaults())
                 .headers(h -> h.frameOptions(fo -> fo.disable()))
                 .csrf(csrf->csrf.ignoringRequestMatchers("/h2-console/**"))
                 .authorizeHttpRequests(ar -> ar.anyRequest().authenticated())
                 .oauth2ResourceServer(o2->o2.jwt(token->token.jwtAuthenticationConverter(jwtAuthConverter)))
                 .build();
     }
-
-    //TODO CORS à affiner (verifier config de keycloak)
+    //TODO ajuster la granularité
+    /**
+     * Politique de CORS origin par Spring Security
+     * @return
+     */
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("*"));
+        //configuration.setAllowedOrigins(Arrays.asList("http://localhost:8081"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
