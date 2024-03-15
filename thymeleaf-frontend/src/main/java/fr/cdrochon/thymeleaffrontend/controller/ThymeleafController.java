@@ -1,7 +1,9 @@
 package fr.cdrochon.thymeleaffrontend.controller;
 
 import fr.cdrochon.thymeleaffrontend.entity.Client;
+import fr.cdrochon.thymeleaffrontend.entity.Document;
 import fr.cdrochon.thymeleaffrontend.entity.Garage;
+import fr.cdrochon.thymeleaffrontend.entity.Vehicule;
 import fr.cdrochon.thymeleaffrontend.repository.ClientRepository;
 import fr.cdrochon.thymeleaffrontend.repository.GarageRepository;
 import org.springframework.core.ParameterizedTypeReference;
@@ -42,7 +44,7 @@ public class ThymeleafController {
     public String garageById(@PathVariable Long id, Model model) {
         Garage garage = garageRepository.findById(id).get();
         model.addAttribute("garage", garage);
-        model.addAttribute("id", garage.getId());
+        //model.addAttribute("id", garage.getId());
         return "garage"; //FIXME
     }
 
@@ -53,10 +55,11 @@ public class ThymeleafController {
      * @return
      */
     @GetMapping("/garages")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('USER')")
     public String garages(Model model) {
         //FIXME Performance RestClient et jwtTokenValue!!!!
         RestClient restClient = RestClient.create("http://localhost:8081");
+        //RestClient restClient = RestClient.create("http://localhost:8888/GARAGE-SERVICE");
         List<Garage> garages =
                 restClient.get().uri("/garages").headers(httpHeaders -> httpHeaders.set(HttpHeaders.AUTHORIZATION,
                         "Bearer " + getJwtTokenValue())).retrieve().body(new ParameterizedTypeReference<List<Garage>>() {
@@ -68,9 +71,42 @@ public class ThymeleafController {
     @GetMapping("/clients")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String clients(Model model) {
-        List<Client> clients = clientRepository.findAll();
+        RestClient restClient = RestClient.create("http://localhost:8082");
+        //RestClient restClient = RestClient.create("http://localhost:8888/CLIENT-SERVICE");
+        List<Client> clients =
+                restClient.get().uri("/clients").headers(httpHeaders -> httpHeaders.set(HttpHeaders.AUTHORIZATION,
+                        "Bearer " + getJwtTokenValue())).retrieve().body(new ParameterizedTypeReference<List<Client>>() {
+                });
         model.addAttribute("clients", clients);
         return "clients";
+    }
+
+    @GetMapping("/vehicules")
+    @PreAuthorize("hasAuthority('USER')")
+    public String vehicules(Model model) {
+        //FIXME Performance RestClient et jwtTokenValue!!!!
+        RestClient restClient = RestClient.create("http://localhost:8083");
+        //RestClient restClient = RestClient.create("http://localhost:8888/VEHICULE-SERVICE");
+        List<Vehicule> vehicules =
+                restClient.get().uri("/vehicules").headers(httpHeaders -> httpHeaders.set(HttpHeaders.AUTHORIZATION,
+                        "Bearer " + getJwtTokenValue())).retrieve().body(new ParameterizedTypeReference<List<Vehicule>>() {
+                });
+        model.addAttribute("vehicules", vehicules);
+        return "vehicules";
+    }
+
+    @GetMapping("/documents")
+    @PreAuthorize("hasAuthority('USER')")
+    public String documents(Model model) {
+        //FIXME Performance RestClient et jwtTokenValue!!!!
+        RestClient restClient = RestClient.create("http://localhost:8084");
+        //RestClient restClient = RestClient.create("http://localhost:8888/DOCUMENT-SERVICE");
+        List<Document> documents =
+                restClient.get().uri("/documents").headers(httpHeaders -> httpHeaders.set(HttpHeaders.AUTHORIZATION,
+                        "Bearer " + getJwtTokenValue())).retrieve().body(new ParameterizedTypeReference<List<Document>>() {
+                });
+        model.addAttribute("documents", documents);
+        return "documents";
     }
 
     /**
