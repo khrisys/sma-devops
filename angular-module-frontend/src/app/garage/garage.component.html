@@ -2,6 +2,30 @@
   <div class="card">
     <div class="card-body">
       <h3>Garages</h3>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>N° de rue</th>
+          <th>Rue</th>
+          <th>CP</th>
+          <th>Ville</th>
+          <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let g of garages">
+          <td>{{g.id}}</td>
+          <td>{{g.nomGarage}}</td>
+          <td>{{g.adresseGarage.numeroDeRue}}</td>
+          <td>{{g.adresseGarage.rue}}</td>
+          <td>{{g.adresseGarage.cp}}</td>
+          <td>{{g.adresseGarage.ville}}</td>
+          <td>{{g.emailContactGarage}}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
