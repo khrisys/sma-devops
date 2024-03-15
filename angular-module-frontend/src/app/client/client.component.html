@@ -2,6 +2,35 @@
   <div class="card">
     <div class="card-body">
       <h3>Clients</h3>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>Prenom</th>
+          <th>Email</th>
+          <th>Téléphone</th>
+          <th>N° de rue</th>
+          <th>Rue</th>
+          <th>CP</th>
+          <th>Ville</th>
+          <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let c of clients">
+          <td>{{c.id}}</td>
+          <td>{{c.nomClient}}</td>
+          <td>{{c.prenomClient}}</td>
+          <td>{{c.mailClient}}</td>
+          <td>{{c.telClient}}</td>
+          <td>{{c.adresseClient.numeroDeRue}}</td>
+          <td>{{c.adresseClient.rue}}</td>
+          <td>{{c.adresseClient.cp}}</td>
+          <td>{{c.adresseClient.ville}}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
