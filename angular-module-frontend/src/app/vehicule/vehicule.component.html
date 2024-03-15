@@ -2,6 +2,28 @@
   <div class="card">
     <div class="card-body">
       <h3>Vehicules</h3>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Immatriculation</th>
+          <th>Date de mise en circulation</th>
+          <th>Type</th>
+          <th>Marque</th>
+          <th>Climatisation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let v of vehicules">
+          <td>{{v.id}}</td>
+          <td>{{v.immatriculationVehicule}}</td>
+          <td>{{v.dateMiseEnCirculationVehicule}}</td>
+          <td>{{v.typeVehicule}}</td>
+          <td>{{v.marqueVehicule}}</td>
+          <td>{{v.climatisationVehicule}}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
