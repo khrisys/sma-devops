@@ -3,6 +3,7 @@ package fr.cdrochon.documentservice.controller;
 import fr.cdrochon.documentservice.entity.Document;
 import fr.cdrochon.documentservice.model.Vehicule;
 import fr.cdrochon.documentservice.repository.DocumentRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +29,7 @@ public class DocumentRestController {
      * @return document
      */
     @GetMapping("/document/{id}")
+    @PreAuthorize("hasAuthority('USER')")
     public Document getDocumentById(@PathVariable Long id) {
         Document document = documentRepository.findById(id).get();
         
@@ -42,6 +44,7 @@ public class DocumentRestController {
      * @return liste de documents
      */
     @GetMapping("/documents")
+    @PreAuthorize("hasAuthority('USER')")
     public List<Document> getDocuments() {
         List<Document> documents = documentRepository.findAll();
         
