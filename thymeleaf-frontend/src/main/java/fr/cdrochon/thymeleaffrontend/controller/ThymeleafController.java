@@ -93,8 +93,8 @@ public class ThymeleafController {
     @PreAuthorize("hasAuthority('USER')")
     public String documents(Model model) {
         //FIXME Performance RestClient et jwtTokenValue!!!!
-        RestClient restClient = RestClient.create("http://localhost:8084");
-        //RestClient restClient = RestClient.create("http://localhost:8888/DOCUMENT-SERVICE");
+        //RestClient restClient = RestClient.create("http://localhost:8084");
+        RestClient restClient = RestClient.create("http://localhost:8888/DOCUMENT-SERVICE");
         List<Document> documents =
                 restClient.get().uri("/documents").headers(httpHeaders -> httpHeaders.set(HttpHeaders.AUTHORIZATION,
                         "Bearer " + getJwtTokenValue())).retrieve().body(new ParameterizedTypeReference<List<Document>>() {
