@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Communication inter services avec prise en charge de la tolerance aux pannes
+ * Tolerance aux pannes
  */
 @FeignClient(name = "CLIENT-SERVICE")
 public interface ClientRestFeign {
@@ -42,7 +42,7 @@ public interface ClientRestFeign {
         client.setTelClient("Non disponible");
         client.setMailClient("Non disponible");
         client.setAdresseClient(adresseClient);
-        System.err.println("Exception default getDefaultCustomer : " + exception.getMessage());
+        System.err.println("Exception default getDefaultClient : " + exception.getMessage());
         return client;
     }
     
@@ -53,7 +53,7 @@ public interface ClientRestFeign {
      * @return liste vide de clients
      */
     default List<Client> getDefaultAllClients(Exception exception) {
-        System.err.println("Exception default getAllCustomers : " + exception.getMessage());
+        System.err.println("Exception default getDefaultAllClients : " + exception.getMessage());
         
         List<Client> clients = new ArrayList<>();
         AdresseClient adresseClient = new AdresseClient("nd", "nd", "nd", "nd");
