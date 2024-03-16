@@ -32,7 +32,7 @@ public class VehiculeRestController {
     }
     
     @GetMapping("/vehicules")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public List<Vehicule> getVehicules() {
         List<Vehicule> vehicules = vehiculeRepository.findAll();
         
