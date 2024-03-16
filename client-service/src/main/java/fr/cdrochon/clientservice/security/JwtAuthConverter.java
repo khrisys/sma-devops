@@ -24,7 +24,12 @@ import java.util.stream.Stream;
 public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationToken> {
     private final JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
 
-
+    /**
+     * Convertir le fichier JWT en une collection
+     *
+     * @param jwt the source object to convert, which must be an instance of {@code S} (never {@code null})
+     * @return
+     */
     @Override
     public AbstractAuthenticationToken convert(@NotNull Jwt jwt) {
         Collection<GrantedAuthority> authorities = Stream.concat(
@@ -38,7 +43,7 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
      * Recupere les roles d'un user depuis son jwt
      *
      * @param jwt
-     * @return
+     * @return collection des roles d'un utilisateur
      */
     private Collection<GrantedAuthority> extractResourceRoles(Jwt jwt) {
         Map<String, Object> realmAccess;
