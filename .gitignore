@@ -4,7 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 ### dossier de fichiers de configuration pourssé sur github
-/configuration-repo/
+#/configuration-repo/
 #/configuration_repo/
 #/configurationrepo/
 

@@ -9,21 +9,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Tolerance aux pannes
  */
+//@FeignClient(name = "CLIENT-SERVICE", value = "getDefaultAllClients")
+//@FeignClient(name = "CLIENT-SERVICE", url = "http://localhost:8082")
 @FeignClient(name = "CLIENT-SERVICE")
 public interface ClientRestFeign {
-    
+
     @GetMapping("/client/{id}")
-    @CircuitBreaker(name = "clientService", fallbackMethod = "getDefaultClient")
+        //@CircuitBreaker(name = "clientService", fallbackMethod = "getDefaultClient")
     Client findClientById(@PathVariable Long id);
-    
+
     @GetMapping("/clients")
-    @CircuitBreaker(name = "clientService", fallbackMethod = "getDefaultAllClients")
+        //@CircuitBreaker(name = "clientService", fallbackMethod = "getDefaultAllClients")
     List<Client> findEveryClients();
-    
+
     /**
      * Comportement par defaut lorsque le microservice client ne repond pas.
      *
@@ -34,9 +37,9 @@ public interface ClientRestFeign {
     default Client getDefaultClient(Long id, Exception exception) {
         AdresseClient adresseClient = new AdresseClient("Numero de rue non disponible", "Rue non " +
                 "disponible", "CP non disponible", "Ville non disponible");
-        
+
         Client client = new Client();
-        client.setId(id);
+        client.setId(1L);
         client.setNomClient("Non disponible");
         client.setPrenomClient("Non disponible");
         client.setTelClient("Non disponible");
@@ -45,7 +48,7 @@ public interface ClientRestFeign {
         System.err.println("Exception default getDefaultClient : " + exception.getMessage());
         return client;
     }
-    
+
     /**
      * Retourne une liste vide de clients par defaut
      *
@@ -53,17 +56,19 @@ public interface ClientRestFeign {
      * @return liste vide de clients
      */
     default List<Client> getDefaultAllClients(Exception exception) {
+
+//        List<Client> clients = new ArrayList<>();
+//        AdresseClient adresseClient = new AdresseClient("nd", "nd", "nd", "nd");
+//        clients.forEach(c-> {
+//            //c.setId(UUID.randomUUID().node());
+//            c.setNomClient("Nom non disponible");
+//            c.setPrenomClient("Prenom non disponible");
+//            c.setMailClient("Mail non disponible");
+//            c.setTelClient("Téléphone non disponible");
+//            c.setAdresseClient(adresseClient);
+//        });
         System.err.println("Exception default getDefaultAllClients : " + exception.getMessage());
-        
-        List<Client> clients = new ArrayList<>();
-        AdresseClient adresseClient = new AdresseClient("nd", "nd", "nd", "nd");
-        clients.forEach(c-> {
-            c.setNomClient("Nom non disponible");
-            c.setPrenomClient("Prenom non disponible");
-            c.setMailClient("Mail non disponible");
-            c.setTelClient("Téléphone non disponible");
-            c.setAdresseClient(adresseClient);
-        });
-        return clients;
+        //return clients;
+        return List.of();
     }
 }

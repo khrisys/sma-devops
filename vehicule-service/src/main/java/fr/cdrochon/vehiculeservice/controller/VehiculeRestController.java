@@ -3,7 +3,7 @@ package fr.cdrochon.vehiculeservice.controller;
 import fr.cdrochon.vehiculeservice.entity.Vehicule;
 import fr.cdrochon.vehiculeservice.model.Client;
 import fr.cdrochon.vehiculeservice.repository.VehiculeRepository;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,8 +13,8 @@ import java.util.List;
 @RestController
 public class VehiculeRestController {
     
-    private final VehiculeRepository vehiculeRepository;
-    private final ClientRestFeign clientRestFeign;
+    private VehiculeRepository vehiculeRepository;
+    private ClientRestFeign clientRestFeign;
     
     public VehiculeRestController(VehiculeRepository vehiculeRepository, ClientRestFeign clientRestFeign) {
         this.vehiculeRepository = vehiculeRepository;
@@ -22,7 +22,7 @@ public class VehiculeRestController {
     }
     
     @GetMapping("/vehicule/{id}")
-    @PreAuthorize("hasAuthority('USER')")
+    //@PreAuthorize("hasAuthority('USER')")
     public Vehicule getVehiculeById(@PathVariable Long id) {
         Vehicule vehicule = vehiculeRepository.findById(id).get();
         

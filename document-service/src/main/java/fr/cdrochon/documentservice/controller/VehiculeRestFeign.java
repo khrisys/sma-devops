@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Tolerance aux pannes
@@ -36,9 +37,9 @@ public interface VehiculeRestFeign {
     default Vehicule getDefaultVehicule(Long id, Exception exception) {
         
         Vehicule vehicule = new Vehicule();
-        vehicule.setId(id);
-        vehicule.setDateMiseEnCirculationVehicule(LocalDate.of(2000, 01, 01));
+        vehicule.setId(1L);
         vehicule.setImmatriculationVehicule("Non disponible");
+        vehicule.setDateMiseEnCirculationVehicule(LocalDate.of(2000, 1, 1));
         vehicule.setTypeVehicule(TypeVehicule.NON_DISPONIBLE);
         vehicule.setMarqueVehicule(MarqueVehicule.NON_DISPONIBLE);
         vehicule.setClimatisationVehicule(false);
@@ -53,15 +54,17 @@ public interface VehiculeRestFeign {
      * @return liste vide de vehicules
      */
     default List<Vehicule> getDefaultAllVehicules(Exception exception) {
-        List<Vehicule> vehicules = new ArrayList<>();
-        vehicules.forEach(v->{
-            v.setImmatriculationVehicule("Immatriculation non disponible");
-            v.setClimatisationVehicule(false);
-            v.setTypeVehicule(TypeVehicule.NON_DISPONIBLE);
-            v.setMarqueVehicule(MarqueVehicule.NON_DISPONIBLE);
-            v.setDateMiseEnCirculationVehicule(LocalDate.of(2020,01,01));
-        });
-        System.err.println("Exception default getDefaultAllVehicules : " + exception.getMessage());
-        return vehicules;
+//        List<Vehicule> vehicules = new ArrayList<>();
+//        vehicules.forEach(v->{
+//            //v.setId(UUID.randomUUID().node());
+//            v.setImmatriculationVehicule("Immatriculation non disponible");
+//            v.setDateMiseEnCirculationVehicule(LocalDate.of(2020,01,01));
+//            v.setTypeVehicule(TypeVehicule.NON_DISPONIBLE);
+//            v.setMarqueVehicule(MarqueVehicule.NON_DISPONIBLE);
+//            v.setClimatisationVehicule(false);
+//        });
+//        System.err.println("Exception default getDefaultAllVehicules : " + exception.getMessage());
+//        return vehicules;
+        return List.of();
     }
 }
