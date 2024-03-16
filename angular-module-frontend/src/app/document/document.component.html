@@ -2,6 +2,30 @@
   <div class="card">
     <div class="card-body">
       <h3>Documents</h3>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>Titre</th>
+          <th>Type</th>
+          <th>Auteur</th>
+          <th>Date de création</th>
+          <th>Date de modification</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let d of documents">
+          <td>{{d.id}}</td>
+          <td>{{d.nomDocument}}</td>
+          <td>{{d.titreDocument}}</td>
+          <td>{{d.typeDocument}}</td>
+          <td>{{d.emetteurDuDocument}}</td>
+          <td>{{d.dateCreationDocument}}</td>
+          <td>{{d.dateModificationDocument}}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
