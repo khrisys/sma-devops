@@ -4,8 +4,6 @@ import fr.cdrochon.thymeleaffrontend.entity.Client;
 import fr.cdrochon.thymeleaffrontend.entity.Document;
 import fr.cdrochon.thymeleaffrontend.entity.Garage;
 import fr.cdrochon.thymeleaffrontend.entity.Vehicule;
-import fr.cdrochon.thymeleaffrontend.repository.ClientRepository;
-import fr.cdrochon.thymeleaffrontend.repository.GarageRepository;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,21 +27,17 @@ import java.util.Map;
 
 @Controller
 public class ThymeleafController {
-    private GarageRepository garageRepository;
-    private ClientRepository clientRepository;
     private ClientRegistrationRepository clientRegistrationRepository;
 
-    public ThymeleafController(GarageRepository garageRepository, ClientRepository clientRepository, ClientRegistrationRepository clientRegistrationRepository) {
-        this.garageRepository = garageRepository;
-        this.clientRepository = clientRepository;
+    public ThymeleafController(ClientRegistrationRepository clientRegistrationRepository) {
         this.clientRegistrationRepository = clientRegistrationRepository;
     }
 
     @GetMapping("/garage/{id}")
     @PreAuthorize("hasAuthority('USER')")
     public String garageById(@PathVariable Long id, Model model) {
-        Garage garage = garageRepository.findById(id).get();
-        model.addAttribute("garage", garage);
+//        Garage garage = garageRepository.findById(id).get();
+//        model.addAttribute("garage", garage);
         //model.addAttribute("id", garage.getId());
         return "garage"; //FIXME
     }
