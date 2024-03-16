@@ -8,15 +8,24 @@ import {KeycloakProfile} from "keycloak-js";
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'angular-front-app';
-  public profile? : KeycloakProfile;
-  constructor(public keycloakService:KeycloakService) {
+  public profile?: KeycloakProfile;
+
+  /**
+   * injection de keycloakSerrvice pour recuperation du profile
+   * @param keycloakService
+   */
+  constructor(public keycloakService: KeycloakService) {
   }
+
+  /**
+   * Recuperation du profil si authentifié
+   */
   ngOnInit() {
-    if(this.keycloakService.isLoggedIn()){
-      this.keycloakService.loadUserProfile().then(profile=>{
-        this.profile=profile;
+    if (this.keycloakService.isLoggedIn()) {
+      this.keycloakService.loadUserProfile().then(profile => {
+        this.profile = profile;
       });
     }
   }
