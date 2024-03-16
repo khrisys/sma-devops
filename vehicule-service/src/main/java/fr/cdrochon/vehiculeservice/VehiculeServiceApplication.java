@@ -27,14 +27,15 @@ public class VehiculeServiceApplication {
                                         ClientRestFeign clientRestFeign) {
         return args -> {
 
-            clientRestFeign.findEveryClients().forEach(veh -> {
+            //clientRestFeign.findEveryClients().forEach(veh -> {
                 Vehicule vehicule1 = Vehicule.builder()
                         .immatriculationVehicule("PD-158-DZ")
                         .dateMiseEnCirculationVehicule(LocalDate.now())
                         .climatisationVehicule(true)
                         .typeVehicule(TypeVehicule.VOITURE)
                         .marqueVehicule(MarqueVehicule.BMW)
-                        .clientId(veh.getId())
+                        .clientId(1L)
+                        //.clientId(veh.getId())
                         .build();
                 Vehicule vehicule2 = Vehicule.builder()
                         .immatriculationVehicule("OS-184-PS")
@@ -42,7 +43,8 @@ public class VehiculeServiceApplication {
                         .climatisationVehicule(false)
                         .typeVehicule(TypeVehicule.MOTO)
                         .marqueVehicule(MarqueVehicule.HARLEY_DAVIDSON)
-                        .clientId(veh.getId())
+                        .clientId(2L)
+                        //.clientId(veh.getId())
                         .build();
                 Vehicule vehicule3 = Vehicule.builder()
                         .immatriculationVehicule("SS-147-DG")
@@ -50,14 +52,15 @@ public class VehiculeServiceApplication {
                         .climatisationVehicule(true)
                         .typeVehicule(TypeVehicule.VOITURE)
                         .marqueVehicule(MarqueVehicule.AUDI)
-                        .clientId(veh.getId())
+                        .clientId(3L)
+                        //.clientId(veh.getId())
                         .build();
 
                 vehiculeRepository.save(vehicule1);
                 vehiculeRepository.save(vehicule2);
                 vehiculeRepository.save(vehicule3);
 
-            });
+            //});
 
         };
     }

@@ -25,7 +25,7 @@ public class DocumentServiceApplication {
     CommandLineRunner commandLineRunner(DocumentRepository documentRepository,
                                         VehiculeRestFeign vehiculeRestFeign) {
         return args -> {
-            vehiculeRestFeign.findEveryVehicules().forEach(v -> {
+            //vehiculeRestFeign.findEveryVehicules().forEach(v -> {
                 //FIXME : normalement, il n'y a pas de date de modif d'un doc
                 Document d1 = Document.builder()
                         .nomDocument("devis-00012547")
@@ -34,7 +34,8 @@ public class DocumentServiceApplication {
                         .typeDocument(TypeDocument.DEVIS)
                         .dateCreationDocument(LocalDate.now())
                         .dateModificationDocument(LocalDate.now())
-                        .vehiculeId(v.getId())
+                        .vehiculeId(2L)
+                        //.vehiculeId(v.getId())
                         .build();
                 Document d2 = Document.builder()
                         .nomDocument("facture mr X")
@@ -61,13 +62,14 @@ public class DocumentServiceApplication {
                         .typeDocument(TypeDocument.DEVIS)
                         .dateCreationDocument(LocalDate.now())
                         .dateModificationDocument(LocalDate.now())
-                        .vehiculeId(v.getId())
+                        .vehiculeId(3L)
+                        //.vehiculeId(v.getId())
                         .build();
                 documentRepository.save(d1);
                 documentRepository.save(d2);
                 documentRepository.save(d3);
                 documentRepository.save(d4);
-            });
+            //});
         };
     }
 }
