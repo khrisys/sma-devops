@@ -7657,3 +7657,15 @@ pom.xml.releaseBackup
 /node_modules/zone.js/package.json
 /node_modules/zone.js/README.md
 /node_modules/zone.js/zone.d.ts
+/out/production/client-service/application.properties
+/out/production/document-service/application.properties
+/out/production/thymeleaf-frontend/application.properties
+/out/production/vehicule-service/application.properties
+/out/production/thymeleaf-frontend/templates/clients.html
+/out/production/thymeleaf-frontend/templates/documents.html
+/out/production/thymeleaf-frontend/templates/garages.html
+/out/production/thymeleaf-frontend/templates/index.html
+/out/production/thymeleaf-frontend/templates/notAuthorized.html
+/out/production/thymeleaf-frontend/templates/oauth2Login.html
+/out/production/thymeleaf-frontend/templates/template.html
+/out/production/thymeleaf-frontend/templates/vehicules.html
