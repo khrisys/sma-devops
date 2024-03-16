@@ -13,10 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Communication inter services avec prise en charge de la tolerance aux pannes au cas où le ms Vehicule ne
- * repondrait pas
- * <p>
- * Miroir de la classe Vehicule du ms VehiculeService
+ * Tolerance aux pannes
  */
 @FeignClient(name = "VEHICULE-SERVICE")
 public interface VehiculeRestFeign {
