@@ -18,7 +18,7 @@ import java.util.Arrays;
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-    private JwtAuthConverter jwtAuthConverter;
+    private final JwtAuthConverter jwtAuthConverter;
 
     public SecurityConfig(JwtAuthConverter jwtAuthConverter) {
         this.jwtAuthConverter = jwtAuthConverter;
