@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.stereotype.Component;
 
 /**
- * Securite
+ * Securite du ms
  *
  * Transmission du JWT du user d'un ms vers un autre
  *
