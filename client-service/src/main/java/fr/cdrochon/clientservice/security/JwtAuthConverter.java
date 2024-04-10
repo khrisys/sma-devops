@@ -20,7 +20,7 @@ import java.util.stream.Stream;
  * Recupere les attributs d'un jwt, et mappe les roles à l'user authentifié, ce qui permet de delivrer les
  * données à une application frontend
  */
-@Component
+//@Component
 public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationToken> {
     private final JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
 

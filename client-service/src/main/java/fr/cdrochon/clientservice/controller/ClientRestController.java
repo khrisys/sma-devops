@@ -7,11 +7,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ClientRestController {
     
-    private ClientRepository clientRepository;
+    private final ClientRepository clientRepository;
     
     public ClientRestController(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;

@@ -8,12 +8,14 @@ import fr.cdrochon.clientservice.repository.ClientRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 
 @SpringBootApplication
+//@EntityScan("fr.cdrochon.clientservice.entity")
 @EnableConfigurationProperties({GetClientParamsConfig.class, GetParamsGlobalConfig.class})
 public class ClientServiceApplication {
 
@@ -42,6 +44,7 @@ public class ClientServiceApplication {
 
 
                     Client.builder()
+                            .id(1L)
                             .nomClient("Dubourg")
                             .prenomClient("Jean")
                             .mailClient("jean.dubourg@gmail.com")
@@ -49,6 +52,7 @@ public class ClientServiceApplication {
                             .adresseClient(adresse1)
                             .build(),
                     Client.builder()
+                            .id(2L)
                             .nomClient("Berga")
                             .prenomClient("Christine")
                             .mailClient("chirstine.berga@tut.io")
@@ -56,6 +60,7 @@ public class ClientServiceApplication {
                             .adresseClient(adresse2)
                             .build(),
                     Client.builder()
+                            .id(3L)
                             .nomClient("Poloua")
                             .prenomClient("Gerard")
                             .mailClient("gegelembrouille@tut.io")

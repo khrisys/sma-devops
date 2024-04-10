@@ -10,5 +10,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class GetParamsGlobalConfig {
     private String p1;
+    private String p3;
     private String p2;
 }

@@ -1,0 +1,14 @@
+services:
+  thymeleaf-frontend:
+    build: thymeleaf-frontend
+    container_name: thymeleaf-frontend
+    ports:
+      - '8091:8091'
+    expose:
+      - '8091'
+    restart: always
+    depends_on:
+      - keycloak
+    environment:
+      - KEYCLOAK_JWT_URL:http://localhost:8080/realms/sma-realm/protocol/openid-connect/certs
+      - KEYCLOAK_ISSUER_URL:http://localhost:8080/realms/sma-realm

@@ -1,5 +1,6 @@
 package fr.cdrochon.clientservice.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import java.util.Map;
 @RestController
 @RefreshScope
 public class TestConfigController {
+   
     private final GetParamsGlobalConfig getParamsGlobalConfig;
     private final GetClientParamsConfig getClientParamsConfig;
 

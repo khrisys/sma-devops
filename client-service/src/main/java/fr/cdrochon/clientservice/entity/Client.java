@@ -10,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "CLIENT_GARAGE")
 public class Client {
     
     @Id

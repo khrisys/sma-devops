@@ -1,0 +1,170 @@
+services:
+#  mysql-db-client:
+#    image: mariadb:10.6
+#    container_name: mysql-db-client
+#    restart: always
+#    volumes:
+#      - mysql_data:/var/lib/mysql
+#    environment:
+#      MYSQL_DATABASE: client-db
+#      MYSQL_USER: khris
+#      MYSQL_PASSWORD: 1234
+#      MYSQL_ROOT_PASSWORD: admin
+#    ports:
+#      - 3306:3306
+#    healthcheck:
+#      test: ["CMD", "mysqladmin", "ping", "-h", "mysql-db-client"]
+#      timeout: 5s
+#      retries: 10
+#  phpmyadmin:
+#    image: phpmyadmin
+#    container_name: phpmyadmin
+#    depends_on:
+#      mysql-db-client:
+#        condition: service_healthy
+#    restart: always
+#    ports:
+#      - 6001:80
+#    environment:
+#      PMA_HOST: mysql-db-client
+#      PMA_PORT: 3306
+#      PMA_ARBITRARY: 1
+##  sma-garage-service:
+##    build: ./garage-service
+##    container_name: sma-garage-service
+##    ports:
+##      - '8081:8081'
+##    expose:
+##      - '8081'
+
+#  sma-client-service:
+#    build: ./client-service
+#    container_name: sma-client-service
+#    ports:
+#      - '8082:8082'
+#    expose:
+#      - '8082'
+#    environment:
+#      - DB_CLIENT_URL:jdbc:mysql://mysql-db-client:3306/client-db
+##      - KEYCLOAK_ISSUER_URL:http://sma-keycloak-service:8080/realms/sma-realm
+##      - KEYCLOAK_JWT_URL:http://sma-keycloak-service:8080/realms/sma-realm/protocol/openid-connect/certs
+#    depends_on:
+#      mysql-db-client:
+#        condition: service_healthy
+
+
+
+
+#  keycloak:
+#    image: quay.io/keycloak/keycloak
+#    container_name: keycloak
+#    environment:
+#      KEYCLOAK_ADMIN: admin
+#      KEYCLOAK_ADMIN_PASSWORD: admin
+#      KC_DB: mariadb
+##      KC_DB_URL: jdbc:postgresql://postgres-server:5432/keycloak
+#      KC_DB_URL_HOST: mysql-db-client
+#      KC_DB_URL_DATABASE: keycloak
+#      KC_DB_URL_PORT: 3306
+#      KC_DB_USERNAME: khris
+#      KC_DB_PASSWORD: 1234
+##      KC_HOSTNAME: localhost
+#    command:
+#      - start-dev
+#      - --import-realm
+#    volumes:
+#      - /home/christiandrochon/Documents/sma-realm-export.json:/opt/keycloak/data/import/sma-realm.json
+#    restart: always
+#    ports:
+#      - '8080:8080'
+#    expose:
+#      - '8080'
+#    depends_on:
+#      mysql-db-client:
+#        condition: service_healthy
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: sma-pgadmin-service888
+    restart: always
+    ports:
+      - "6002:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pg@toto.com
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    shm_size: 128mb
+    env_file:
+      - pg.env
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: khris
+      POSTGRES_PASSWORD: 123456
+#      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
+#      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
+      SERVER_MODE: True
+
+    ports:
+      - '5432:5432'
+    expose:
+      - '5432'
+    healthcheck:
+      test: "exit 0"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./mysql.sql:/docker-entrypoint-initdb.d/mysql.sql
+#      - ./init.sh:/init.sh
+
+
+
+#  mysql-db-client:
+#    image: mariadb:10.6
+##    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+#    container_name: mysql-db-client
+#    restart: always
+#    volumes:
+#      - mysql_data:/var/lib/mysql
+#    environment:
+#      MYSQL_DATABASE: keycloak
+#      MYSQL_USER: khris
+#      MYSQL_PASSWORD: 1234
+#      # user_root = root
+#      MYSQL_ROOT_PASSWORD: admin
+##    env_file:
+##      - mysql.sql
+#    ports:
+#      - 3306:3306
+#    healthcheck:
+#      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+#      timeout: 5s
+#      retries: 10
+#
+#  phpmyadmin:
+#    image: phpmyadmin
+#    container_name: phpmyadmin
+#    depends_on:
+#      - mysql-db-client
+#    restart: always
+#    volumes:
+#      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+#    ports:
+#      - 6001:80
+#    environment:
+#      PMA_HOST: mysql-db-client
+#      PMA_PORT: 3306
+#      PMA_ARBITRARY: 1
+
+volumes:
+  mysql_data:
+  postgres_data:
+  pgadmin_data:
+
+
+
