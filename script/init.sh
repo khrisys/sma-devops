@@ -2,7 +2,6 @@
 set -e
 echo "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
 psql --username "pguser" --dbname "postgres" --port 5432 <<-EOSQL
-create table public.rogero (id int);
 
 su postgres -c "createuser -w -d -r -s pguser"
 su postgres -c "createdb -O toto pguser"
