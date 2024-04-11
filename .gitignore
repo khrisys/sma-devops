@@ -65,3 +65,4 @@ replay_pid*
 target/
 pom.xml.tag
 pom.xml.releaseBackup
+/out/
