@@ -20,13 +20,20 @@ function initializeKeycloak(keycloak: KeycloakService) {
       config: {
         url: 'http://localhost:8080',
         realm: 'sma-realm',
-        clientId: 'sma-angular-module-frontend'
+        clientId: 'angular-module-frontend'
       },
       initOptions: {
-        onLoad: 'check-sso',
-        silentCheckSsoRedirectUri:
-          window.location.origin + '/assets/silent-check-sso.html'
+        onLoad: 'login-required',
+        checkLoginIframe: false
+        // silentCheckSsoRedirectUri:
+        //   window.location.origin + '/assets/silent-check-sso.html'
       }
+      // ,
+      // enableBearerInterceptor: true,
+      // bearerPrefix: 'Bearer',
+      // bearerExcludedUrls: [
+      //   '/assets',
+      //   '/clients/public']
     });
 }
 @NgModule({

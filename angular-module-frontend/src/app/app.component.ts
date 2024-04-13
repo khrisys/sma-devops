@@ -9,7 +9,7 @@ import {KeycloakProfile} from "keycloak-js";
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  title = 'angular-front-app';
+  title = 'SMA';
   public profile?: KeycloakProfile;
 
   /**
