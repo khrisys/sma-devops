@@ -1,16 +1,20 @@
 package fr.cdrochon.garageservice;
 
+import fr.cdrochon.garageservice.config.GetGarageGlobalConfig;
+import fr.cdrochon.garageservice.config.GetGarageParamsConfig;
 import fr.cdrochon.garageservice.entity.Adresse;
 import fr.cdrochon.garageservice.entity.Garage;
 import fr.cdrochon.garageservice.repository.GarageRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 
 @SpringBootApplication
+@EnableConfigurationProperties({GetGarageGlobalConfig.class, GetGarageParamsConfig.class})
 public class GarageServiceApplication {
 
     public static void main(String[] args) {
