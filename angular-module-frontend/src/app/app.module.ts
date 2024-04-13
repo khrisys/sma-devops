@@ -24,16 +24,15 @@ function initializeKeycloak(keycloak: KeycloakService) {
       },
       initOptions: {
         onLoad: 'login-required',
-        checkLoginIframe: false
+        checkLoginIframe: true,
         // silentCheckSsoRedirectUri:
         //   window.location.origin + '/assets/silent-check-sso.html'
-      }
-      // ,
-      // enableBearerInterceptor: true,
-      // bearerPrefix: 'Bearer',
-      // bearerExcludedUrls: [
-      //   '/assets',
-      //   '/clients/public']
+      },
+      enableBearerInterceptor: true,
+      bearerPrefix: 'Bearer',
+      bearerExcludedUrls: [
+        '/assets',
+        '/clients/public']
     });
 }
 @NgModule({
