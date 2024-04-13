@@ -17,17 +17,18 @@ import java.util.Arrays;
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-
+    
     private JwtAuthConverter jwtAuthConverter;
-
+    
     public SecurityConfig(JwtAuthConverter jwtAuthConverter) {
         this.jwtAuthConverter = jwtAuthConverter;
     }
-
+    
     /**
      * Spring security supprime les frames ar defaut, car considere que c'est une faille de securité
-     *
+     * <p>
      * Recuperation des roles depuis le jwt
+     *
      * @param httpSecurity
      * @return
      * @throws Exception
@@ -38,14 +39,20 @@ public class SecurityConfig {
                 .csrf(Customizer.withDefaults())
                 .cors(Customizer.withDefaults())
                 .headers(h -> h.frameOptions(fo -> fo.disable()))
-                .csrf(csrf->csrf.ignoringRequestMatchers("/h2-console/**"))
-                .authorizeHttpRequests(ar -> ar.anyRequest().authenticated())
-                .oauth2ResourceServer(o2->o2.jwt(token->token.jwtAuthenticationConverter(jwtAuthConverter)))
+                //                .csrf(csrf->csrf.ignoringRequestMatchers("/h2-console/**"))
+                                .authorizeHttpRequests(ar -> ar.anyRequest().authenticated())
+//                .authorizeHttpRequests(auth -> {
+//                    auth.requestMatchers("/vehicules")
+//                        .hasAnyRole("ADMIN", "USER");
+//                })
+                .oauth2ResourceServer(o2 -> o2.jwt(token -> token.jwtAuthenticationConverter(jwtAuthConverter)))
                 .build();
     }
     //TODO ajuster la granularité
+    
     /**
      * Politique de CORS origin par Spring Security
+     *
      * @return
      */
     @Bean
