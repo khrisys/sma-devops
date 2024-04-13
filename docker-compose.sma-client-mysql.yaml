@@ -101,8 +101,6 @@ services:
     image: postgres
     container_name: postgres
     shm_size: 128mb
-    env_file:
-      - pg.env
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: khris
