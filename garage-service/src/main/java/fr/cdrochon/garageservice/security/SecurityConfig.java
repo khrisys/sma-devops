@@ -20,17 +20,18 @@ import java.util.Arrays;
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-
+    
     private final JwtAuthConverter jwtAuthConverter;
-
+    
     public SecurityConfig(JwtAuthConverter jwtAuthConverter) {
         this.jwtAuthConverter = jwtAuthConverter;
     }
-
+    
     /**
      * Spring security supprime les frames ar defaut, car considere que c'est une faille de securité
-     *
+     * <p>
      * Recuperation des roles depuis le jwt
+     *
      * @param httpSecurity
      * @return
      * @throws Exception
@@ -41,21 +42,28 @@ public class SecurityConfig {
                 .csrf(Customizer.withDefaults())
                 .cors(Customizer.withDefaults())
                 .headers(h -> h.frameOptions(fo -> fo.disable()))
-//                .csrf(csrf->csrf.ignoringRequestMatchers("/h2-console/**"))
-                .authorizeHttpRequests(ar -> ar.anyRequest().authenticated())
-                .oauth2ResourceServer(o2->o2.jwt(token->token.jwtAuthenticationConverter(jwtAuthConverter)))
+                //                .csrf(csrf->csrf.ignoringRequestMatchers("/h2-console/**"))
+                .authorizeHttpRequests(ar -> {
+                    ar.anyRequest()
+                      .authenticated();
+//                    ar.requestMatchers("/garages")
+//                      .hasRole("USER");
+                })
+                .oauth2ResourceServer(o2 -> o2.jwt(token -> token.jwtAuthenticationConverter(jwtAuthConverter)))
                 .build();
     }
     //TODO ajuster la granularité
+    
     /**
      * Politique de CORS origin par Spring Security
+     *
      * @return
      */
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
-//        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8081"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8081"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -63,11 +71,11 @@ public class SecurityConfig {
         return source;
     }
     
-//    @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
-//    private String issuerUri;
-//
-//    @Bean
-//    public JwtDecoder jwtDecoder() {
-//        return JwtDecoders.fromOidcIssuerLocation(issuerUri);
-//    }
+    //    @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
+    //    private String issuerUri;
+    //
+    //    @Bean
+    //    public JwtDecoder jwtDecoder() {
+    //        return JwtDecoders.fromOidcIssuerLocation(issuerUri);
+    //    }
 }

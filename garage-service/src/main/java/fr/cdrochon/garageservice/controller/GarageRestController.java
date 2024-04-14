@@ -2,6 +2,7 @@ package fr.cdrochon.garageservice.controller;
 
 import fr.cdrochon.garageservice.entity.Garage;
 import fr.cdrochon.garageservice.repository.GarageRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,8 @@ public class GarageRestController {
     }
     
     @GetMapping("/garages")
+    @PreAuthorize("hasAnyRole('ADMN', 'USER')")
+//    @PreAuthorize("USER")
     public List<Garage> garageSet(){
         return garageRepository.findAll();
     }

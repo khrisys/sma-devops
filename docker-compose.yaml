@@ -51,6 +51,8 @@ services:
       CONFIG_SERVICE_URL: http://sma-configuration-service:9999/application/default
       KEYCLOAK_ISSUER_URL: http://keycloak:8080/realms/sma-realm
       KEYCLOAK_JWT_URL: http://keycloak:8080/realms/sma-realm/protocol/openid-connect/certs
+      KEYCLOAK_REDIRECT_AUTH: http://localhost:8080/realms/sma-realm/protocol/openid-connect/auth
+      KEYCLOAK_TOKEN_AUTH: http://localhost:8080/realms/sma-realm/protocol/openid-connect/token
     networks:
       sma:
     depends_on:
@@ -222,41 +224,45 @@ services:
     networks:
       sma:
 
-  #  angular-module-frontend:
-#    build: angular-module-frontend
-#    container_name: angular-module-frontend
-#    ports:
-#      - '80:80'
-#    expose:
-#      - '80'
-#    restart: always
-#    environment:
-#      KEYCLOAK_ISSUER_URL: http://keycloak:8080/realms/sma-realm
-#      KEYCLOAK_JWT_URL: http://keycloak:8080/realms/sma-realm/protocol/openid-connect/certs
-##      spring.security.oauth2.resourceserver.jwt.issuer-uri: ${KEYCLOAK_ISSUER_URL:http://localhost:8080/realms/sma-realm}
-##      spring.security.oauth2.resourceserver.jwt.jwk-set-uri: ${KEYCLOAK_JWT_URL:http://localhost:8080/realms/sma-realm/protocol/openid-connect/certs}
+  sma-angular-module-frontend:
+    build: angular-module-frontend
+    container_name: sma-angular-module-frontend
+    ports:
+      - '80:80'
+    expose:
+      - '80'
+    restart: always
+    environment:
+      DISCOVERY_SERVICE_URL: http://sma-discovery-service:8761/eureka
+      CONFIG_SERVICE_URL: http://sma-configuration-service:9999/application/default
+      KEYCLOAK_ISSUER_URL: http://keycloak:8080/realms/sma-realm
+      KEYCLOAK_JWT_URL: http://keycloak:8080/realms/sma-realm/protocol/openid-connect/certs
+      KEYCLOAK_REDIRECT_AUTH: http://localhost:8080/realms/sma-realm/protocol/openid-connect/auth
+      KEYCLOAK_TOKEN_AUTH: http://localhost:8080/realms/sma-realm/protocol/openid-connect/token
+#      spring.security.oauth2.resourceserver.jwt.issuer-uri: ${KEYCLOAK_ISSUER_URL:http://localhost:8080/realms/sma-realm}
+#      spring.security.oauth2.resourceserver.jwt.jwk-set-uri: ${KEYCLOAK_JWT_URL:http://localhost:8080/realms/sma-realm/protocol/openid-connect/certs}
 #    depends_on:
 #      sma-configuration-service:
 #        condition: service_healthy
 
-  thymeleaf-frontend:
-    build: thymeleaf-frontend
-    container_name: thymeleaf-frontend
-    ports:
-      - '8091:8091'
-    expose:
-      - '8091'
-    environment:
-      KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/sma-realm
-      # Ici, laisser 'localhost' sur l'url car c'est une redirection vers l'adresse reelle
-      KEYCLOAK_REDIRECT_AUTH: http://localhost:8080/realms/sma-realm/protocol/openid-connect/auth
-      KEYCLOAK_REDIRECT_URI: http://localhost:8091/login/oauth2/code/sma-thymeleaf-frontend
-      KEYCLOAK_TOKEN_AUTH: http://localhost:8080/realms/sma-realm/protocol/openid-connect/token
-    depends_on:
-      keycloak:
-        condition: service_healthy
-    networks:
-      sma:
+#  thymeleaf-frontend:
+#    build: thymeleaf-frontend
+#    container_name: thymeleaf-frontend
+#    ports:
+#      - '8091:8091'
+#    expose:
+#      - '8091'
+#    environment:
+#      KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/sma-realm
+#      # Ici, laisser 'localhost' sur l'url car c'est une redirection vers l'adresse reelle
+#      KEYCLOAK_REDIRECT_AUTH: http://localhost:8080/realms/sma-realm/protocol/openid-connect/auth
+#      KEYCLOAK_REDIRECT_URI: http://localhost:8091/login/oauth2/code/sma-thymeleaf-frontend
+#      KEYCLOAK_TOKEN_AUTH: http://localhost:8080/realms/sma-realm/protocol/openid-connect/token
+#    depends_on:
+#      keycloak:
+#        condition: service_healthy
+#    networks:
+#      sma:
 
 
 
